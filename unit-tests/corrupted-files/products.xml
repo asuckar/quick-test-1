@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+    <product>
+        <id type="integer">4365897498705</id>
+        <title>2 x BEAVITA Vitalkost + InShape-Biomed® Schokolade, Pulver</title>
+        <body-html>2 x BEAVITA Vitalkost plus InShape-Biomed® Schokolade, Pulver: Die ausgewählten Diät-Shakes für deinen Weg zur Traumfigur - hier bei nur bestellen.</body-html>
+        <vendor>Biomed</vendor>
+        <product-type>Slimming</product-type>
+        <created-at type="dateTime">2019-11-11T21:51:52+01:00</created-at>
+        <handle>2-x-beavita-vitalkost-plus-inshape-biomed-schokolade</handle>
+        <published-scope>web</published-scope>
+        <tags>ingredients_no_gelatine, ingredients_no_gluten, ingredients_no_preservatives, ingredients_vegetarian, tax_reduced</tags>
+        <image>
+            <id type="integer">16308454621265</id>
+            <product-id type="integer">4365897498705</product-id>
+            <created-at type="dateTime">2020-12-19T04:02:33+01:00</created-at>
+            <updated-at type="dateTime">2020-12-19T04:02:33+01:00</updated-at>
+            <width type="integer">800</width>
+            <height type="integer">800</height>
+            

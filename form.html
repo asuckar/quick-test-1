@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>A Test</title>
+        <!-- debug/developer version\
+            <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+        <script src="js/globals.js"></script>
+    </head>
+    <body>
+        <div id="upload">
+            <input type="file" id="files" name="files[]" ref="file" @change="uploadFiles" multiple accept="text/csv, text/xml" />
+            <label for="file">Upload xml/csv file(s)</label>
+            <upload-history v-bind:history="uploadHistory"></upload-history>
+        </div>
+        <script>
+            Vue.component('upload-history', {
+            data: function () {
+                return {
+                    
+                }
+            },
+            props: {
+                history: {
+                    type : Array,
+                    default: []
+
+                }
+            },
+            template: 
+                '<div>\
+                    <h3>History</h3>\
+                    <ol>\
+                        <li v-for="(item, index) in history" :key="index">\
+                            {{item}}\
+                        </li>\
+                    </ol>\
+                </div>'
+            });
+            var app=new Vue({
+                el: '#upload',
+                data: {
+                    uploadHistory: [],
+                },
+                methods: {
+                    uploadFiles: function (evt) {
+                        const fList=this.$refs.file.files;
+                        const request = new XMLHttpRequest();
+                        const formData = new FormData();
+
+                        // I should have used some vuejs libraries likeAxios here but I preferred to go for VanillaJS.
+                        request.open("POST", Globals.UPLOAD_API, true);
+                        request.onreadystatechange = () => {
+                            if (request.readyState === 4 && request.status === 200) {
+                                const data=JSON.parse(request.responseText);
+                                Globals.FUNCTIONS.log(data);
+                                var cleanedList=Array.prototype.slice.call(fList);
+                                if(!data.error) {
+                                    for(var f=data.failed_files.length-1; f>=0; --f)
+                                    cleanedList=Globals.FUNCTIONS.removeItemFromFileArray(cleanedList, data.failed_files[f]);
+                                    for(var f=0; f<cleanedList.length; ++f)
+                                        this.uploadHistory.push(cleanedList[f].name);
+                                    if(data.failed_files.length>0)alert('some/all files failed to upload!\nsuccessful files will be added to the history list below the form');
+                                }
+                                this.$refs.file.value="";
+                            }
+                        };
+                        
+                        request.onerror = (error) => {
+                            this.$refs.file.value="";
+                            alert("request failed\n\ntry again");
+                        }
+                        
+                        for (let i = 0; i < fList.length; i++)
+                            formData.append("files[]", fList[i]);
+                        request.send(formData);
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

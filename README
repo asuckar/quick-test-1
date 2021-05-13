@@ -1,0 +1,21 @@
+// better here for parseXML and parseCSV to use a commit and rollback just to avoid changing data when integrity check fails.
+
+// better to also add all items together just to rollback everything when it fails but that depends on the need of the company so maybe
+// the decision would be to add correct items and remove only the failing ones.
+
+// <product-type>, <tags> and <image> could be in a different table if there would be multiple relations/heavy operations like search by tag or get items for a specific tag and does not belong to another specific tag
+// or adding multiple images per product. all of that depends on the current structure that may be required or the expected future updates.
+
+// I am showing some test use-cases but it is not necessarily the only part that requires checks, I would say it is just to reflect some use-cases and some scenarios expected (I can add infinite number of use-cases when required)
+
+// I am not handling the whole errors right-now (like in case of a parse fail for the XML I took the decision to consider it invalid file only and not rollingback the database changes from this file)
+// I know I should have done it but this is just to show I know about it.
+
+// when I am checking for each line if it is inserted I don't like it but I did it this way to open a margin to add a webhook if required to get a feedback per item inserted not per the full process was done
+
+// I have added some comments to the SQL tables/columns please check when you have a doubt about why I have used a specific type. It may answer your question. If not I am open to discuss it
+
+// for database connection you need to configure the db name and user/password in db .php
+// globals.js contains some configurable variables and helper functions also so please configure your web api URL there.
+
+// upload-history is a very small and simple component it is ok to be defined in-place instead of moving it to another single-file-component
