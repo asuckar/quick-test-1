@@ -2,35 +2,14 @@
 -- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: May 13, 2021 at 09:42 AM
+-- Host: localhost:3306
+-- Generation Time: May 14, 2021 at 03:45 PM
 -- Server version: 5.7.32
 -- PHP Version: 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
---
--- Database: `dbnu3test`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_inventory`
---
-
-CREATE TABLE `tbl_inventory` (
-  `handle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'the assumption is the handle is unique per item',
-  `location` varchar(85) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '85 can fit Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu',
-  `amount` float UNSIGNED NOT NULL DEFAULT '0' COMMENT 'to be checked why the values are in float'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_product`
---
 
 CREATE TABLE `tbl_product` (
   `id` int(10) UNSIGNED NOT NULL COMMENT 'unsigned int should be enough for 200+ current products it has enough room for other new products',
@@ -51,30 +30,13 @@ CREATE TABLE `tbl_product` (
   `prod_img_src` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `tbl_inventory`
---
-ALTER TABLE `tbl_inventory`
-  ADD PRIMARY KEY (`handle`);
-
---
--- Indexes for table `tbl_product`
---
 ALTER TABLE `tbl_product`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `product_id_index` (`prod_id`) USING HASH,
-  ADD KEY `handle_foreign_key_index` (`prod_handle`);
+  ADD KEY `handle_foreignkey` (`prod_handle`);
 
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tbl_product`
---
 ALTER TABLE `tbl_product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'unsigned int should be enough for 200+ current products it has enough room for other new products', AUTO_INCREMENT=83;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'unsigned int should be enough for 200+ current products it has enough room for other new products', AUTO_INCREMENT=130;
+
+ALTER TABLE `tbl_product`
+  ADD CONSTRAINT `handle_foreignkey` FOREIGN KEY (`prod_handle`) REFERENCES `tbl_inventory` (`handle`) ON DELETE CASCADE;

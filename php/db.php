@@ -8,11 +8,11 @@
         protected static $instance = null;
         public $link;
         
-        protected function __construct($server='localhost', $database, $usrnm, $pswrd) {
+        protected function __construct($server='127.0.0.1', $database, $usrnm, $pswrd) {
             $this->link = mysqli_connect($server, $usrnm, $pswrd, $database);
             mysqli_set_charset($this->link, "utf8");
         }
-        public static function getInstance($server='localhost') {
+        public static function getInstance($server='127.0.0.1') {
             global $DB_NAME;
             global $USR;
             global $PWD;
